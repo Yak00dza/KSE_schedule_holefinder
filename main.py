@@ -18,7 +18,6 @@ def get_args():
 def main():
     args = get_args()
     holes = logic.check_holes(args)
-    dal.write_holes_to_json(holes)
 
 if __name__ == '__main__':
     main()

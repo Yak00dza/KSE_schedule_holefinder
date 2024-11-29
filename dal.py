@@ -13,11 +13,11 @@ class DAL: #Data Abstraction Layer
     def fetch_groups(self):
         pass
 
-    def write_holes_to_json(pass):
+    def write_holes_to_json(self):
         pass
 
-    def get_groups_by_email(pass) -> GroupCombination:
+    def get_groups_by_email(self) -> GroupCombination:
         pass
 
-    def get_week_by_number(pass) -> Week:
+    def get_week_by_number(self) -> Week:
         pass
