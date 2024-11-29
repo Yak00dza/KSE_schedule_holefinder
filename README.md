@@ -1,6 +1,6 @@
 # What does this app do?
 This app takes an .xlsx file provided by SSO as an input combined with a student email and a week number.
-The app processes the file and output the holes it found in the schdule to a file.
+The app processes the file and outputі the holes it found in the schdule to a file.
 
 # Why these inputs?
 This input allow for a future upscaling to a script that takes a file and finds holes in the schedule for every single group combination
