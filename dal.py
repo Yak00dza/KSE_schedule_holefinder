@@ -13,7 +13,7 @@ class DAL: #Data Abstraction Layer
     def fetch_groups(self):
         pass
 
-    def write_holes_to_json(self):
+    def write_holes_to_json(self, holes):
         pass
 
     def get_groups_by_email(self) -> GroupCombination:
