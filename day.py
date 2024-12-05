@@ -2,12 +2,12 @@ class Day:
     def __init__(self, classes):
         self.classes = classes
 
-    def discover_holes_in(group_combination):
+    def discover_holes_in(self, group_combination):
         n = len(self.classes)
         taken = [False] * n
 
         for i in range(n):
-            if self.classes[n].intersects(group_combination):
+            if self.classes[n].intersects(self, group_combination):
                 taken[i] = True
 
         holes = []
