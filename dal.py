@@ -35,8 +35,8 @@ class DAL: #Data Abstraction Layer
             if not email:
                 break
             if email not in info:  # one student can have two majors so email might happen twice
-                info[email] = []
-            info[email] += [group for group in row[columns_for_student_info::] if group]
+                info[email] = GroupCombination()
+            info[email] += GroupCombination([group for group in row[columns_for_student_info::] if group])
 
         return info
 
@@ -48,5 +48,10 @@ class DAL: #Data Abstraction Layer
 
     def get_week_by_number(self) -> Week:
         pass
+
+if __name__ == '__main__':
+    dict = DAL('data.xlsx').fetch_groups()
+    for i in dict:
+        print(i, dict[i])
 
 

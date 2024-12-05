@@ -1,5 +1,5 @@
 class GroupCombination:
-    def __init__(self, groups):
+    def __init__(self, groups=[]):
         self.groups = groups
 
     def add_group(self, group):
@@ -20,3 +20,13 @@ class GroupCombination:
             if group_combination.contains(group):
                 return True
         return False
+
+    def __add__(self, another):
+        for group in self.groups:
+            if not another.contains(group):
+                another.add_group(group)
+        return another
+
+    def __str__(self):
+        return str(self.groups)
+
