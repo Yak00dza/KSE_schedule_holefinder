@@ -8,7 +8,7 @@ class GroupCombination:
     def contains(self, group) -> bool:
         return group in self.groups
 
-    def get_intersection(self, group_combination: GroupCombination) -> GroupCombination:
+    def get_intersection(self, group_combination):
         intersection = GroupCombination()
         for group in self.groups:
             if group_combination.contains(group):
