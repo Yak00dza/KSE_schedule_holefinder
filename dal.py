@@ -1,8 +1,7 @@
-from openpyxl.reader.excel import load_workbook
+from day import Day
 from group_combination import GroupCombination
 from week import Week
 from config import get_cfg_option
-import json
 import openpyxl
 
 class DAL: #Data Abstraction Layer
@@ -14,9 +13,45 @@ class DAL: #Data Abstraction Layer
         return workbook[sheet_name]
 
     def fetch_schedule(self):
-        sheet = self.load_sheet(get_cfg_option('schedule_sheet'))
-        #TODO: implement
-        return None
+        worksheet = self.load_sheet(get_cfg_option('schedule_sheet'))
+        config = get_cfg_option("schedule_sheet_info")
+        rows = config["rows_per_week_including_gap_rows_and_weeks_name_rows"]
+        lesson_rows = config["lessons_per_day"]
+        columns = config["columns_per_work_day"]
+        saturday_columns = config["columns_for_saturday"]
+        days = config["scheduled_days"]
+        total_weeks = config["total_weeks_this_term"]
+        #first column is time slots
+        #first row is a gap row
+        #second row is a number of the week
+        #no sunday
+        all_weeks = []
+
+        row_index = 0
+        for row in worksheet.iter_rows(min_col = 2, max_row= total_weeks * rows, values_only=True):
+            row_index += 1
+
+            if row_index % rows == 2:
+                new_week = Week([Day([]) for i in range(days)])
+
+            if (row_index - 1) % rows in range(rows - lesson_rows, rows):
+                day_chunks = []
+                for i in range(1,days + 1):
+                    if i < 6:
+                        day_chunks.append([i for i in row[(i - 1) * columns : i * columns] if i])
+                    else:
+                        day_chunks.append([i for i in row[(i - 1) * columns : (i - 1) * columns + saturday_columns] if i])
+
+                # even if chunk is empty list mustn't delete because messes up days order
+                day_chunks = [GroupCombination(chunk) for chunk in day_chunks]
+                for i in range(days):
+                    new_week.days[i].classes.append(day_chunks[i])
+
+            if row_index % rows == 0:
+                all_weeks.append(new_week)
+
+        return all_weeks
+
 
     # returns {student_email -> their groups}
     def fetch_groups(self):
@@ -33,7 +68,7 @@ class DAL: #Data Abstraction Layer
         for row in worksheet.iter_rows(min_row=2, values_only=True):
             email = row[email_ind]
             if not email:
-                break
+                continue
             if email not in info:  # one student can have two majors so email might happen twice
                 info[email] = GroupCombination()
             info[email] += GroupCombination([group for group in row[columns_for_student_info::] if group])
@@ -49,9 +84,6 @@ class DAL: #Data Abstraction Layer
     def get_week_by_number(self) -> Week:
         pass
 
-if __name__ == '__main__':
-    dict = DAL('data.xlsx').fetch_groups()
-    for i in dict:
-        print(i, dict[i])
+
 
 

@@ -1,5 +1,14 @@
 {
-    "schedule_sheet": "Sheet name",
+    "schedule_sheet": "Schedule",
+    "schedule_sheet_info":
+        {
+            "columns_per_work_day": 11,
+            "columns_for_saturday": 3,
+            "lessons_per_day": 8,
+            "rows_per_week_including_gap_rows_and_weeks_name_rows": 10,
+            "scheduled_days": 6,
+            "total_weeks_this_term" : 16
+        },
     "groups_sheet_name": "Group_Schedule",
     "groups_sheet_column_info" :
         {
