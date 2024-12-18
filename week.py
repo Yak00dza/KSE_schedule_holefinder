@@ -4,8 +4,11 @@ class Week:
     def __init__(self, days):
         self.days = days
 
-    def get_days(self):
-        return self.days
+    def find_holes_in(self, group_combination):
+        result = {}
+        for day in self.days:
+            holes = day.find_holes_in(group_combination)
+            result[day] = holes
 
-    def get_day_n(self, n) -> Day:
-        return self.days[n-1]
+        return result
+        
