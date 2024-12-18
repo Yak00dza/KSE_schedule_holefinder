@@ -8,3 +8,6 @@ def load_config_file():
 
 def get_cfg_option(option):
     return load_config_file()[option]
+
+def get_cfg_list(list_name):
+    return get_cfg_option(list_name)

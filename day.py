@@ -2,7 +2,7 @@ class Day:
     def __init__(self, classes):
         self.classes = classes
 
-    def discover_holes_in(self, group_combination):
+    def find_holes_in(self, group_combination):
         n = len(self.classes)
         taken = [False] * n
 
