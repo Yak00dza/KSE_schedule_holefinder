@@ -7,9 +7,9 @@ def check_holes(args):
     week_n = args.week
     email = args.student_email
 
-    groups = dal.get_groups_by_email(email)
+    student_groups = dal.get_groups_by_email(email)
     week = dal.get_week_by_number(week_n)
 
-    holes = week.get_holes(groups)
-    dal.write_holes_to_json(holes)
+    holes = week.find_holes_in(student_groups)
 
+    return holes

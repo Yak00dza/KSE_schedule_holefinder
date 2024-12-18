@@ -8,6 +8,8 @@ import openpyxl
 class DAL: #Data Abstraction Layer
     def __init__(self, filename):
         self.filename = filename
+        self.groups = self.fetch_groups()
+        self.schedule = self.fetch_schedule()
 
     def load_sheet(self, sheet_name):
         workbook = openpyxl.load_workbook(self.filename,read_only=True, data_only=True)
@@ -43,15 +45,8 @@ class DAL: #Data Abstraction Layer
     def write_holes_to_json(self, holes):
         pass
 
-    def get_groups_by_email(self) -> GroupCombination:
-        pass
+    def get_groups_by_email(self, email) -> GroupCombination:
+        return self.groups[email]
 
-    def get_week_by_number(self) -> Week:
-        pass
-
-if __name__ == '__main__':
-    dict = DAL('data.xlsx').fetch_groups()
-    for i in dict:
-        print(i, dict[i])
-
-
+    def get_week_by_number(self, n) -> Week:
+        return self.schedule[n]
