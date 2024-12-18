@@ -2,6 +2,9 @@ class GroupCombination:
     def __init__(self, groups=[]):
         self.groups = groups
 
+    def __str__(self):
+        return str(self.groups)
+
     def add_group(self, group):
         self.groups.append(group)
 

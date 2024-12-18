@@ -84,4 +84,4 @@ class DAL: #Data Abstraction Layer
         return self.groups[email]
 
     def get_week_by_number(self, n) -> Week:
-        return self.schedule[n]
+        return self.schedule[n-1]

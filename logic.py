@@ -12,4 +12,4 @@ def check_holes(args):
 
     holes = week.find_holes_in(student_groups)
 
-    return holes
+    #return holes
