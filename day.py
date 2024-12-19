@@ -4,17 +4,15 @@ class Day:
 
     def find_holes_in(self, group_combination):
         n = len(self.classes)
-        taken = [False] * n
+        taken = []
 
         for i in range(n):
             if self.classes[i].intersects(group_combination):
-                taken[i] = True
+                taken.append(i+1)
 
-        holes = []
-        prev = 0
-        for i in range(1, len(taken)):
-            if not taken[i] and (taken[prev] or prev in holes):
-                holes.append(i+1)
-            prev = i
+        if len(taken) == 0:
+            return []
+
+        holes = [i for i in range(taken[0], taken[-1]) if i not in taken]
 
         return holes
