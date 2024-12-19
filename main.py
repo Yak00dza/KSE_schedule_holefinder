@@ -18,6 +18,7 @@ def get_args():
 def main():
     args = get_args()
     holes = logic.check_holes(args)
+    print(holes)
 
 if __name__ == '__main__':
     main()

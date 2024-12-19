@@ -85,3 +85,8 @@ class DAL: #Data Abstraction Layer
 
     def get_week_by_number(self, n) -> Week:
         return self.schedule[n-1]
+
+    def visualize_holes(self, week, holes, groups):
+        #copy the sheet and name it "Holes_group_hash"
+        #fill the corresponding cells with red
+        pass

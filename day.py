@@ -7,13 +7,13 @@ class Day:
         taken = [False] * n
 
         for i in range(n):
-            if self.classes[n].intersects(self, group_combination):
+            if self.classes[i].intersects(group_combination):
                 taken[i] = True
 
         holes = []
         prev = 0
         for i in range(1, len(taken)):
-            if taken[i] == True and taken[prev] == False:
+            if not taken[i] and (taken[prev] or prev in holes):
                 holes.append(i+1)
             prev = i
 

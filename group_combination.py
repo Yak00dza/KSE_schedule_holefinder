@@ -33,3 +33,5 @@ class GroupCombination:
     def __str__(self):
         return str(self.groups)
 
+    def get_hash(self):
+        pass
