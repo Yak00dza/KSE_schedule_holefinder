@@ -10,6 +10,8 @@ def check_holes(args):
     student_groups = dal.get_groups_by_email(email)
     week = dal.get_week_by_number(week_n)
 
-    holes = week.find_holes_in(student_groups)
+    schedule = week.get_schedule_of(student_groups)
+    for day in schedule:
+        print(schedule[day])
 
-    return holes
+    return schedule

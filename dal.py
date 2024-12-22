@@ -89,7 +89,6 @@ class DAL: #Data Abstraction Layer
     def get_all_students(self):
         return self.groups.keys()
 
-    def visualize_holes(self, week, holes, groups):
-        #copy the sheet and name it "Holes_group_hash"
-        #fill the corresponding cells with red
-        pass
+    def get_all_weeks(self):
+        return self.schedule
+

@@ -12,11 +12,11 @@ class GroupCombination:
         return group in self.groups
 
     def get_intersection(self, group_combination):
-        intersection = GroupCombination()
+        intersection = []
         for group in self.groups:
             if group_combination.contains(group):
-                intersection.add_group(group)
-        return intersection
+                intersection.append(group)
+        return GroupCombination(intersection)
 
     def intersects(self, group_combination) -> bool:
         for group in self.groups:
@@ -33,5 +33,9 @@ class GroupCombination:
     def __str__(self):
         return str(self.groups)
 
+    def __len__(self):
+        return len(self.groups)    
+
     def get_hash(self):
-        pass
+        raw_string = ''.join(sorted(self.groups))
+        return hash(raw_string)

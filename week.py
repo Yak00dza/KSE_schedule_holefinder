@@ -4,14 +4,10 @@ class Week:
     def __init__(self, days):
         self.days = days
 
-    def __str__(self):
-        return str(self.days)
-
-    def find_holes_in(self, group_combination):
+    def get_schedule_of(self, group_combination):
         result = {}
         for day in self.days:
-            holes = day.find_holes_in(group_combination)
-            result[day] = holes
+            result[day] = day.get_schedule_of(group_combination)
 
         return result
         
