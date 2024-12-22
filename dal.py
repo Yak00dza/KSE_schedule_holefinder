@@ -80,11 +80,14 @@ class DAL: #Data Abstraction Layer
     def write_holes_to_json(self, holes):
         pass
 
-    def get_groups_by_email(self, email) -> GroupCombination:
-        return self.groups[email]
+    def get_groups_by_student(self, student) -> GroupCombination:
+        return self.groups[student]
 
     def get_week_by_number(self, n) -> Week:
         return self.schedule[n-1]
+
+    def get_all_students(self):
+        return self.groups.keys()
 
     def visualize_holes(self, week, holes, groups):
         #copy the sheet and name it "Holes_group_hash"
