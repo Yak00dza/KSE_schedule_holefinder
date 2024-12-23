@@ -17,32 +17,43 @@ class DAL: #Data Abstraction Layer
     def fetch_schedule(self):
         worksheet = self.load_sheet(get_cfg_option('schedule_sheet'))
         config = get_cfg_option("schedule_sheet_info")
-        rows = config["rows_per_week_including_gap_rows_and_weeks_name_rows"]
+        rows = config["rows_per_week_including_weeks_name_rows"]
         lesson_rows = config["lessons_per_day"]
-        columns = config["columns_per_work_day"]
-        saturday_columns = config["columns_for_saturday"]
+        columns = config["columns_per_work_day_except_monday"]
+        monday_columns = config["columns_for_monday"]
         days = config["scheduled_days"]
         total_weeks = config["total_weeks_this_term"]
         #first column is time slots
-        #first row is a gap row
-        #second row is a number of the week
-        #no sunday
+        #firts row is a number of the week
+        #no sunday and saturday
+
         all_weeks = []
 
         row_index = 0
         for row in worksheet.iter_rows(min_col = 2, max_row= total_weeks * rows, values_only=True):
             row_index += 1
 
-            if row_index % rows == 2:
+            if row_index % rows == rows - lesson_rows:
                 new_week = Week([Day([]) for i in range(days)])
 
             if (row_index - 1) % rows in range(rows - lesson_rows, rows):
                 day_chunks = []
                 for i in range(1,days + 1):
-                    if i < 6:
-                        day_chunks.append([i for i in row[(i - 1) * columns : i * columns] if i])
+                    if i == 1 :
+                        chunk = row[: monday_columns]
                     else:
-                        day_chunks.append([i for i in row[(i - 1) * columns : (i - 1) * columns + saturday_columns] if i])
+                        chunk = row[(i - 2) * columns + monday_columns: (i - 1) * columns + monday_columns]
+
+                    final_chunk = []
+                    for cell in chunk:
+                        if not cell:
+                            continue
+
+                        if not cell.strip().replace("\n", ""):
+                            continue
+                        group = cell.replace("\n", "").strip()
+                        final_chunk.append(group)
+                    day_chunks.append(final_chunk)
 
                 # even if chunk is empty list mustn't delete because messes up days order
                 day_chunks = [GroupCombination(chunk) for chunk in day_chunks]
@@ -85,7 +96,19 @@ class DAL: #Data Abstraction Layer
 
             if student not in info:  # one student can have two majors so email might happen twice
                 info[student] = GroupCombination()
-            info[student] += GroupCombination([group for group in row[columns_for_student_info::] if group])
+
+            groups = []
+            for cell in row[columns_for_student_info::]:
+                if not cell:
+                    continue
+
+                if not cell.strip().replace("\n",""):
+                    continue
+
+                group = cell.strip().replace("\n","")
+                groups.append(group)
+
+            info[student] += GroupCombination(groups)
 
         return info
 
