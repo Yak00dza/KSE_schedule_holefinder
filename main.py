@@ -19,13 +19,18 @@ def get_args():
 def save_result_to_xlsx(result):
     workbook = Workbook()
     key_order = sorted(result.keys(), key = lambda x: result[x]['total_holes'] + result[x]['total_overlaps'], reverse=True)
+    n = 0
     for groups_hash in key_order:
+        n += 1
         info = result[groups_hash]
-        workbook.create_sheet(str(groups_hash))
-        sheet = workbook[str(groups_hash)]
+        workbook.create_sheet(str(n))
+        sheet = workbook[str(n)]
 
         sheet.append(['Total holes:', info['total_holes']])
         sheet.append(['Total overlaps:', info['total_overlaps']])
+        sheet.append([])
+
+        sheet.append(['Students:', info['n_students']])
         sheet.append([])
 
         sheet.append(['Groups:'])
@@ -85,10 +90,13 @@ def main():
         groups = dal.get_groups_by_student(student)
         groups_hash = groups.get_hash()
         if groups_hash in result:
+            result[groups_hash]['n_students'] += 1 
             continue
+
         result[groups_hash] = {}
         result[groups_hash]['groups'] = groups
         result[groups_hash]['schedule'] = []
+        result[groups_hash]['n_students'] = 1
         result[groups_hash]['total_holes'] = 0
         result[groups_hash]['total_overlaps'] = 0
         for week in term:
