@@ -58,22 +58,34 @@ class DAL: #Data Abstraction Layer
     # returns {student_email -> their groups}
     def fetch_groups(self):
         worksheet = self.load_sheet(get_cfg_option('groups_sheet_name'))
-        email_column_name = get_cfg_option('groups_sheet_column_info')['email_column_name']
-        columns_for_student_info = get_cfg_option('groups_sheet_column_info')['columns_for_student_info']
+        config = get_cfg_option("groups_sheet_column_info")
+        name_column_name = config['name_column_name']
+        surname_column_name = config['surname_column_name']
+        columns_for_student_info = config['columns_for_student_info']
 
         row = list(worksheet.iter_rows(max_row=1, values_only=True))[0]
         header = [column_name for column_name in row if column_name]
 
-        email_ind = header.index(email_column_name)
+        name_ind = header.index(name_column_name)
+        surname_ind = header.index(surname_column_name)
 
         info = {}
         for row in worksheet.iter_rows(min_row=2, values_only=True):
-            email = row[email_ind]
-            if not email:
+            name = row[name_ind]
+            surname = row[surname_ind]
+
+            if not name and not surname:
                 continue
-            if email not in info:  # one student can have two majors so email might happen twice
-                info[email] = GroupCombination()
-            info[email] += GroupCombination([group for group in row[columns_for_student_info::] if group])
+            elif not name and surname:
+                student = surname
+            elif not surname and name:
+                student = name
+            else:
+                student = surname + "_" + name
+
+            if student not in info:  # one student can have two majors so email might happen twice
+                info[student] = GroupCombination()
+            info[student] += GroupCombination([group for group in row[columns_for_student_info::] if group])
 
         return info
 

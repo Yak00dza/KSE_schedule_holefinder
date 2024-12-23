@@ -9,10 +9,11 @@
             "scheduled_days": 6,
             "total_weeks_this_term" : 16
         },
-    "groups_sheet_name": "Group_Schedule",
+    "groups_sheet_name": "Group_schedule",
     "groups_sheet_column_info" :
         {
             "columns_for_student_info": 4,
-            "email_column_name": "Email"
+            "name_column_name": "Name",
+            "surname_column_name": "Surname"
         }
 }
