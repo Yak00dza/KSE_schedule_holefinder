@@ -70,32 +70,23 @@ class DAL: #Data Abstraction Layer
     def fetch_groups(self):
         worksheet = self.load_sheet(get_cfg_option('groups_sheet_name'))
         config = get_cfg_option("groups_sheet_column_info")
-        name_column_name = config['name_column_name']
-        surname_column_name = config['surname_column_name']
+        email_column_name = config['email_column_name']
         columns_for_student_info = config['columns_for_student_info']
 
         row = list(worksheet.iter_rows(max_row=1, values_only=True))[0]
         header = [column_name for column_name in row if column_name]
 
-        name_ind = header.index(name_column_name)
-        surname_ind = header.index(surname_column_name)
+        email_ind = header.index(email_column_name)
 
         info = {}
         for row in worksheet.iter_rows(min_row=2, values_only=True):
-            name = row[name_ind]
-            surname = row[surname_ind]
+            email = row[email_ind]
 
-            if not name and not surname:
+            if not email:
                 continue
-            elif not name and surname:
-                student = surname
-            elif not surname and name:
-                student = name
-            else:
-                student = surname + "_" + name
 
-            if student not in info:  # one student can have two majors so email might happen twice
-                info[student] = GroupCombination()
+            if email not in info:  # one student can have two majors so email might happen twice
+                info[email] = GroupCombination()
 
             groups = []
             for cell in row[columns_for_student_info::]:
@@ -108,7 +99,7 @@ class DAL: #Data Abstraction Layer
                 group = cell.strip().replace("\n","")
                 groups.append(group)
 
-            info[student] += GroupCombination(groups)
+            info[email] += GroupCombination(groups)
 
         return info
 

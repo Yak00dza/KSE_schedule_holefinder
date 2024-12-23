@@ -13,7 +13,6 @@
     "groups_sheet_column_info" :
         {
             "columns_for_student_info": 4,
-            "name_column_name": "Name",
-            "surname_column_name": "Surname"
+            "email_column_name": "Email"
         }
 }
