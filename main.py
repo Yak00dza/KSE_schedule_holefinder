@@ -37,7 +37,7 @@ def save_result_to_xlsx(result):
         sheet.append(info['groups'].groups)
         sheet.append([])
 
-        sheet.append(['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'])
+        sheet.append(['Пн', 'Вт', 'Ср', 'Чт', 'Пт'])
         for week in info['schedule']:
             for i in range(8): #8 classes per day
                 sheet.append([day[i] for day in week.values()])
