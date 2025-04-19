@@ -2,14 +2,14 @@
     "schedule_sheet": "Schedule",
     "schedule_sheet_info":
         {
-            "columns_for_monday": 15,
-            "columns_per_work_day_except_monday": 14,
+            "columns_for_monday": 13,
+            "columns_per_work_day_except_monday": 13,
             "lessons_per_day": 8,
             "rows_per_week_including_weeks_name_rows": 9,
             "scheduled_days": 5,
-            "total_weeks_this_term" : 15
+            "total_weeks_this_term" : 12
         },
-    "groups_sheet_name": "Group_schedule",
+    "groups_sheet_name": "Groups",
     "groups_sheet_column_info" :
         {
             "columns_for_student_info": 4,
